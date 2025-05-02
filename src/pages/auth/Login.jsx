@@ -7,6 +7,7 @@ import { login } from '../../redux/slices/authSlice';
 import Button from '../../components/ui/Button';
 import Input from '../../components/ui/Input';
 import Label from '../../components/ui/Label';
+import { loginFailure, loginStart, loginSuccess } from '../../redux/slice/authSlice';
 
 const Login = () => {
   const [email, setEmail] = useState("");
@@ -24,11 +25,15 @@ const Login = () => {
     }
     
     try {
-      await dispatch(login({ email, password })).unwrap();
+      // await dispatch(login({ email, password })).unwrap();
+      dispatch(loginStart()); 
+
       toast.success("You have successfully logged in");
+      dispatch(loginSuccess({email,password}))
       navigate('/dashboard');
     } catch (error) {
       toast.error(error || "Failed to login. Please try again.");
+      dispatch(loginFailure(error))
     }
   };
 

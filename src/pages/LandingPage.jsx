@@ -50,7 +50,7 @@ const LandingPage = () => {
               </Link>
             </div>
           </div>
-          <div className="flex justify-center">
+          <div className="flex justify-center animate-pulse">
             <img 
               src="https://images.pexels.com/photos/4126724/pexels-photo-4126724.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2"
               alt="Student studying with documents" 
@@ -72,7 +72,7 @@ const LandingPage = () => {
           </div>
           
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-            <div className="bg-white p-8 rounded-lg shadow-md transition-all duration-300 hover:shadow-xl transform hover:-translate-y-1">
+            <div className="bg-white p-8 rounded-lg shadow-md transition-all duration-300 hover:shadow-xl transform hover:-translate-y-1 cursor-pointer">
               <div className="h-12 w-12 bg-purple-100 text-purple-600 rounded-lg flex items-center justify-center mb-4">
                 <FaFile className="h-6 w-6" />
               </div>
@@ -82,7 +82,7 @@ const LandingPage = () => {
               </p>
             </div>
             
-            <div className="bg-white p-8 rounded-lg shadow-md transition-all duration-300 hover:shadow-xl transform hover:-translate-y-1">
+            <div className="bg-white p-8 rounded-lg shadow-md transition-all duration-300 hover:shadow-xl transform hover:-translate-y-1 cursor-pointer">
               <div className="h-12 w-12 bg-purple-100 text-purple-600 rounded-lg flex items-center justify-center mb-4">
                 <FaSearch className="h-6 w-6" />
               </div>
@@ -92,7 +92,7 @@ const LandingPage = () => {
               </p>
             </div>
             
-            <div className="bg-white p-8 rounded-lg shadow-md transition-all duration-300 hover:shadow-xl transform hover:-translate-y-1">
+            <div className="bg-white p-8 rounded-lg shadow-md transition-all duration-300 hover:shadow-xl transform hover:-translate-y-1 cursor-pointer">
               <div className="h-12 w-12 bg-purple-100 text-purple-600 rounded-lg flex items-center justify-center mb-4">
                 <FaPlus className="h-6 w-6" />
               </div>
@@ -113,7 +113,7 @@ const LandingPage = () => {
             Join DocTalk today and start getting smarter answers from your study materials.
           </p>
           <Link to="/signup">
-            <Button className="bg-white text-purple-600 hover:bg-gray-100 px-8 py-3 rounded-md transition-all duration-300">
+            <Button className="bg-white hover:bg-gray-100 px-8 py-3 rounded-md transition-all duration-300 text-black ">
               Get Started for Free
             </Button>
           </Link>

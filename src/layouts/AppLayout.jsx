@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { Outlet, NavLink, useNavigate } from 'react-router-dom';
 import { FaBookOpen, FaSearch, FaTachometerAlt, FaBars, FaTimes, FaSignOutAlt, FaUser } from 'react-icons/fa';
 import { useDispatch, useSelector } from 'react-redux';
-import { logout } from '../redux/slices/authSlice';
+import { logout } from '../redux/slice/authSlice';
 import { toast } from 'sonner';
 import { RiChatVoiceAiLine } from "react-icons/ri";
 

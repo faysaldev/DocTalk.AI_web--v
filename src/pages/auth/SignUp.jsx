@@ -7,6 +7,8 @@ import { signup } from '../../redux/slices/authSlice';
 import Button from '../../components/ui/Button';
 import Input from '../../components/ui/Input';
 import Label from '../../components/ui/Label';
+import { signupFailure, signupStart, signupSuccess } from '../../redux/slice/authSlice';
+import usePublicAxiosSecure from '../../hooks/UseAxiosPublicSecure';
 
 const SignUp = () => {
   const [name, setName] = useState("");
@@ -16,6 +18,7 @@ const SignUp = () => {
   const { loading, error } = useSelector(state => state.auth);
   const dispatch = useDispatch();
   const navigate = useNavigate();
+  const axiosPublic = usePublicAxiosSecure();
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -31,11 +34,29 @@ const SignUp = () => {
     }
     
     try {
-      await dispatch(signup({ email, password, name })).unwrap();
+      dispatch(signupStart())
+
+      const formattedUsername =
+      name.toLowerCase().replace(/\s+/g, "") + Math.floor(Math.random() * 1000);
+  const requestBody = {
+      username: formattedUsername,
+      email: email,
+      name: name,
+      password: password,
+      confirm_password: confirmPassword,
+    };
+
+    // Make API call
+    const {data} = await axiosPublic.post('/api/auth/signup', requestBody);
+
+
+    dispatch(signupSuccess({email:data?.data?.details?.email,password:data?.data?.details?.cognito_sub,name:data?.data?.details?.username}))
+    console.log(data,"clg loging datas")
       toast.success("Account created successfully");
-      navigate('/dashboard');
+      navigate('/verify-email');
     } catch (error) {
       toast.error(error || "Failed to create account");
+      dispatch(signupFailure(error))
     }
   };
 

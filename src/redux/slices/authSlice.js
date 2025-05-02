@@ -1,48 +1,53 @@
-import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
+import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
 
 // Mock user data
 const mockedUsers = [
-  { id: '1', email: 'demo@example.com', password: 'password123', name: 'Demo User' }
+  {
+    id: "1",
+    email: "demo@example.com",
+    password: "password123",
+    name: "Demo User",
+  },
 ];
 
 // Async thunks for authentication
 export const login = createAsyncThunk(
-  'auth/login',
+  "auth/login",
   async ({ email, password }, { rejectWithValue }) => {
     try {
       // Simulate API call
-      await new Promise(resolve => setTimeout(resolve, 800));
-      
+      await new Promise((resolve) => setTimeout(resolve, 800));
+
       // Find user
       const user = mockedUsers.find(
-        u => u.email === email && u.password === password
+        (u) => u.email === email && u.password === password
       );
-      
+
       if (!user) {
-        return rejectWithValue('Invalid email or password');
+        return rejectWithValue("Invalid email or password");
       }
-      
+
       // Return user data (exclude password)
       const { password: _, ...userData } = user;
       return userData;
     } catch (error) {
-      return rejectWithValue(error.message || 'Login failed');
+      return rejectWithValue(error.message || "Login failed");
     }
   }
 );
 
 export const signup = createAsyncThunk(
-  'auth/signup',
+  "auth/signup",
   async ({ email, password, name }, { rejectWithValue }) => {
     try {
       // Simulate API call
-      await new Promise(resolve => setTimeout(resolve, 1000));
-      
+      await new Promise((resolve) => setTimeout(resolve, 1000));
+
       // Check if user already exists
-      if (mockedUsers.some(u => u.email === email)) {
-        return rejectWithValue('Email already in use');
+      if (mockedUsers.some((u) => u.email === email)) {
+        return rejectWithValue("Email already in use");
       }
-      
+
       // Create new user
       const newUser = {
         id: Date.now().toString(),
@@ -50,37 +55,37 @@ export const signup = createAsyncThunk(
         password,
         name,
       };
-      
+
       // Add to mocked users (in a real app, this would be a server-side operation)
       mockedUsers.push(newUser);
-      
+
       // Return user data (exclude password)
       const { password: _, ...userData } = newUser;
       return userData;
     } catch (error) {
-      return rejectWithValue(error.message || 'Signup failed');
+      return rejectWithValue(error.message || "Signup failed");
     }
   }
 );
 
 export const forgotPassword = createAsyncThunk(
-  'auth/forgotPassword',
+  "auth/forgotPassword",
   async (email, { rejectWithValue }) => {
     try {
       // Simulate API call
-      await new Promise(resolve => setTimeout(resolve, 1000));
-      
+      await new Promise((resolve) => setTimeout(resolve, 1000));
+
       // Check if user exists
-      const user = mockedUsers.find(u => u.email === email);
-      
+      const user = mockedUsers.find((u) => u.email === email);
+
       if (!user) {
         // Still return success for security reasons
         return { success: true };
       }
-      
+
       return { success: true };
     } catch (error) {
-      return rejectWithValue(error.message || 'Failed to process request');
+      return rejectWithValue(error.message || "Failed to process request");
     }
   }
 );
@@ -93,7 +98,7 @@ const initialState = {
 };
 
 const authSlice = createSlice({
-  name: 'auth',
+  name: "auth",
   initialState,
   reducers: {
     logout: (state) => {
@@ -120,7 +125,7 @@ const authSlice = createSlice({
       state.loading = false;
       state.error = action.payload;
     });
-    
+
     // Signup
     builder.addCase(signup.pending, (state) => {
       state.loading = true;
@@ -135,7 +140,7 @@ const authSlice = createSlice({
       state.loading = false;
       state.error = action.payload;
     });
-    
+
     // Forgot Password
     builder.addCase(forgotPassword.pending, (state) => {
       state.loading = true;
