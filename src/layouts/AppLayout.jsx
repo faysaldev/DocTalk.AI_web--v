@@ -18,7 +18,7 @@ const AppLayout = () => {
   const handleLogout = () => {
     dispatch(logout());
     dispatch(clearDocuments())
-    toast.success('Logged out successfully');
+    toast.success('Logged out successfully😀');
     navigate('/login');
   };
 
