@@ -7,29 +7,77 @@ import { forgotPassword } from '../../redux/slices/authSlice';
 import Button from '../../components/ui/Button';
 import Input from '../../components/ui/Input';
 import Label from '../../components/ui/Label';
+import usePublicAxiosSecure from '../../hooks/UseAxiosPublicSecure';
+import { buttonLoader } from '../../redux/slice/authSlice';
 
 const ForgotPassword = () => {
   const [email, setEmail] = useState("");
   const [submitted, setSubmitted] = useState(false);
   const { loading } = useSelector(state => state.auth);
   const dispatch = useDispatch();
+  const axiosPublicSecure= usePublicAxiosSecure();
+
+  // const handleSubmit = async (e) => {
+  //   e.preventDefault();
+    
+  //   if (!email) {
+  //     toast.error("Please enter your email address");
+  //     return;
+  //   }
+    
+
+    
+
+
+  //   try {
+  //     await dispatch(forgotPassword(email)).unwrap();
+  //     setSubmitted(true);
+  //     toast.success("If an account exists with this email, you will receive a reset link");
+  //   } catch (error) {
+  //     toast.error("Failed to send reset link. Please try again.");
+  //   }
+  // };
 
   const handleSubmit = async (e) => {
-    e.preventDefault();
-    
-    if (!email) {
-      toast.error("Please enter your email address");
-      return;
-    }
-    
-    try {
-      await dispatch(forgotPassword(email)).unwrap();
-      setSubmitted(true);
-      toast.success("If an account exists with this email, you will receive a reset link");
-    } catch (error) {
-      toast.error("Failed to send reset link. Please try again.");
-    }
-  };
+  e.preventDefault();
+
+  if (!email) {
+    toast.error("Please enter your email address");
+    return;
+  }
+
+  // Optional loading state if needed
+
+  try {
+    dispatch(buttonLoader(true))
+    // Call your API for forgot password
+    const data = { email }; // Assuming `data` contains only the email
+    const response = await axiosPublicSecure.post(
+      "/api/auth/forgot-password",
+      data
+    );
+    console.log(response);
+
+    // if (response) {
+    //   toast.success("Verification code sent successfully!");
+    // }
+
+    // Dispatch Redux action for further state management
+    await dispatch(forgotPassword(email)).unwrap();
+    setSubmitted(true);
+
+    toast.success("If an account exists with this email, you will receive a reset link");
+    dispatch(buttonLoader(false))
+
+  } catch (error) {
+    toast.error(
+      error?.response?.data?.message || "Failed to send reset link. Please try again."
+    );
+    dispatch(buttonLoader(false))
+
+  } 
+};
+
 
   return (
     <div className="space-y-6">
