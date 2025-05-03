@@ -19,7 +19,26 @@ export const subjectsSlice = createSlice({
       state.subjects = action.payload;
     },
     addSubject: (state, action) => {
-      state.subjects.push(action.payload);
+      const colors = [
+        "bg-blue-500",
+        "bg-purple-500",
+        "bg-green-500",
+        "bg-red-500",
+        "bg-yellow-500",
+        "bg-indigo-500",
+      ];
+
+      // Create new subject
+      const newSubject = {
+        id: Date.now().toString(),
+        name: action.payload,
+        color: colors[Math.floor(Math.random() * colors.length)],
+        documentCount: 0,
+        createdAt: new Date().toISOString(),
+      };
+
+      // Push new subject to the list
+      state.subjects.push(newSubject);
     },
     removeSubject: (state, action) => {
       state.subjects = state.subjects.filter(

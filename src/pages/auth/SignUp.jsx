@@ -7,11 +7,12 @@ import { signup } from '../../redux/slices/authSlice';
 import Button from '../../components/ui/Button';
 import Input from '../../components/ui/Input';
 import Label from '../../components/ui/Label';
-import { signupFailure, signupStart, signupSuccess } from '../../redux/slice/authSlice';
+import { buttonLoader, signupFailure, signupStart, signupSuccess } from '../../redux/slice/authSlice';
 import usePublicAxiosSecure from '../../hooks/UseAxiosPublicSecure';
 
 const SignUp = () => {
   const [name, setName] = useState("");
+  const [username, setUserName] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
@@ -35,11 +36,8 @@ const SignUp = () => {
     
     try {
       dispatch(signupStart())
-
-      const formattedUsername =
-      name.toLowerCase().replace(/\s+/g, "") + Math.floor(Math.random() * 1000);
   const requestBody = {
-      username: formattedUsername,
+      username: username,
       email: email,
       name: name,
       password: password,
@@ -47,13 +45,14 @@ const SignUp = () => {
     };
 
     // Make API call
-    const {data} = await axiosPublic.post('/api/auth/signup', requestBody);
+    const {data} = await axiosPublic.post(`/api/auth/signup`, requestBody);
 
 
-    dispatch(signupSuccess({email:data?.data?.details?.email,password:data?.data?.details?.cognito_sub,name:data?.data?.details?.username}))
+    // dispatch(signupSuccess({email:data?.data?.details?.email,password:data?.data?.details?.cognito_sub,name:data?.data?.details?.username}))
     console.log(data,"clg loging datas")
       toast.success("Account created successfully");
-      navigate('/verify-email');
+      buttonLoader(false)
+      navigate(`/verify-email/${username}`);
     } catch (error) {
       toast.error(error || "Failed to create account");
       dispatch(signupFailure(error))
@@ -79,6 +78,19 @@ const SignUp = () => {
             placeholder="John Doe"
             value={name}
             onChange={(e) => setName(e.target.value)}
+            disabled={loading}
+            required
+          />
+        </div>
+
+                <div className="space-y-2">
+          <Label htmlFor="username">Username</Label>
+          <Input
+            id="username"
+            type="text"
+            placeholder="@johndoe"
+            value={username}
+            onChange={(e) => setUserName(e.target.value)}
             disabled={loading}
             required
           />

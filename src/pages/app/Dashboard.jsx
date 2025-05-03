@@ -5,12 +5,13 @@ import { FaPlus, FaSearch, FaBookOpen, FaUpload } from 'react-icons/fa';
 import { toast } from 'sonner';
 import { RiChatVoiceAiLine } from "react-icons/ri";
 
-import { fetchSubjects, addSubjectAsync } from '../../redux/slices/subjectsSlice';
+import { fetchSubjects } from '../../redux/slices/subjectsSlice';
 import Button from '../../components/ui/Button';
 import { Card, CardContent, CardHeader, CardTitle, CardDescription } from '../../components/ui/Card';
 import Input from '../../components/ui/Input';
 import Label from '../../components/ui/Label';
 import { cn } from '../../utils/cn';
+import { addSubject } from '../../redux/slice/subjectsSlice';
 
 const Dashboard = () => {
   const { currentUser } = useSelector(state => state.auth);
@@ -30,17 +31,19 @@ const Dashboard = () => {
       toast.error("Subject name cannot be empty");
       return;
     }
+
+    dispatch(addSubject(newSubjectName))
+    toast.success(`Subject "${newSubjectName}" created`);
+    setNewSubjectName("");
+    setIsDialogOpen(false);
     
-    dispatch(addSubjectAsync(newSubjectName))
-      .unwrap()
-      .then(() => {
-        toast.success(`Subject "${newSubjectName}" created`);
-        setNewSubjectName("");
-        setIsDialogOpen(false);
-      })
-      .catch((error) => {
-        toast.error(error || "Failed to create subject");
-      });
+    // dispatch(addSubjectAsync(newSubjectName))
+    //   .unwrap()
+    //   .then(() => {
+    //   })
+    //   .catch((error) => {
+    //     toast.error(error || "Failed to create subject");
+    //   });
   };
 
   return (
@@ -50,9 +53,9 @@ const Dashboard = () => {
           <h1 className="text-3xl font-bold">Welcome, {currentUser?.name}</h1>
           <p className="text-gray-500">Manage your subjects and documents</p>
         </div>
-        <div className="flex space-x-2">
+        <div className="flex space-x-2 relative">
           {isDialogOpen ? (
-            <div className="bg-white p-4 rounded-lg shadow-lg border z-10">
+            <div className="bg-white p-4 rounded-lg shadow-lg border z-10 ">
               <form onSubmit={handleAddSubject}>
                 <h3 className="text-lg font-semibold mb-2">Add New Subject</h3>
                 <p className="text-sm text-gray-500 mb-4">

@@ -5,6 +5,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { logout } from '../redux/slice/authSlice';
 import { toast } from 'sonner';
 import { RiChatVoiceAiLine } from "react-icons/ri";
+import { clearDocuments } from '../redux/slice/documentsSlice';
 
 
 
@@ -16,6 +17,7 @@ const AppLayout = () => {
 
   const handleLogout = () => {
     dispatch(logout());
+    dispatch(clearDocuments())
     toast.success('Logged out successfully');
     navigate('/login');
   };

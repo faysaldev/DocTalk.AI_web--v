@@ -5,11 +5,17 @@ import { toast } from 'sonner';
 import Button from '../../components/ui/Button';
 import Input from '../../components/ui/Input';
 import Label from '../../components/ui/Label';
+import usePublicAxiosSecure from '../../hooks/UseAxiosPublicSecure';
+import { useNavigate, useParams } from 'react-router-dom';
 
 const VerifyEmail = () => {
   const [code, setCode] = useState("");
   const [isSubmitting, setIsSubmitting] = useState(false);
   const { currentUser } = useSelector(state => state.auth);
+  const axiosPublicSecure = usePublicAxiosSecure();
+  const {username} = useParams();
+  const navigate = useNavigate();
+
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -22,15 +28,36 @@ const VerifyEmail = () => {
     setIsSubmitting(true);
     
     // Simulate verification process
-    setTimeout(() => {
-      setIsSubmitting(false);
-      toast.success("Your email has been verified");
-      // In a real app, you would update the user's email verification status
-    }, 1500);
+    try {
+      const response = await axiosPublicSecure.post("/api/auth/verify-email", {
+        confirmation_code:code,
+        username,
+      });
+      if (response?.data) {
+        toast.success("Email Verified Successfully!");
+        navigate("/login");
+       setIsSubmitting(false);
+
+      }
+    } catch (error) {
+       setIsSubmitting(false);
+      console.log(error)
+      toast.error(error.response.data.message || "Verification failed");
+    }
+
+
   };
 
-  const handleResendCode = () => {
-    toast.info("A new verification code has been sent to your email");
+  const handleResendCode = async() => {
+    try {
+      await axiosPublicSecure.post("/api/auth/resend-verification-code", {
+        username: username,
+      });
+      toast.success("OTP Resent Successfully!");
+    } catch (error) {
+      toast.error(error.response?.data?.message || "Failed to resend OTP");
+    }
+
   };
 
   return (
