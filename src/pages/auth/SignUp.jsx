@@ -3,7 +3,7 @@ import { Link, useNavigate } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 import { FaBookOpen } from 'react-icons/fa';
 import { toast } from 'sonner';
-import { signup } from '../../redux/slices/authSlice';
+// import { signup } from '../../redux/slices/authSlice';
 import Button from '../../components/ui/Button';
 import Input from '../../components/ui/Input';
 import Label from '../../components/ui/Label';

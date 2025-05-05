@@ -3,7 +3,7 @@ import { Link } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 import { FaBookOpen } from 'react-icons/fa';
 import { toast } from 'sonner';
-import { forgotPassword } from '../../redux/slices/authSlice';
+// import { forgotPassword } from '../../redux/slices/authSlice';
 import Button from '../../components/ui/Button';
 import Input from '../../components/ui/Input';
 import Label from '../../components/ui/Label';
@@ -63,7 +63,7 @@ const ForgotPassword = () => {
     // }
 
     // Dispatch Redux action for further state management
-    await dispatch(forgotPassword(email)).unwrap();
+    // await dispatch(forgotPassword(email)).unwrap();
     setSubmitted(true);
 
     toast.success("If an account exists with this email, you will receive a reset link");

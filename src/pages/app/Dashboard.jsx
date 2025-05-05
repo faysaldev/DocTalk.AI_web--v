@@ -2,10 +2,10 @@ import React, { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { FaPlus, FaSearch, FaBookOpen, FaUpload } from "react-icons/fa";
-import { toast } from "sonner";
+// import { toast } from "sonner";
 import { RiChatVoiceAiLine } from "react-icons/ri";
 
-import { fetchSubjects } from "../../redux/slices/subjectsSlice";
+// import { fetchSubjects } from "../../redux/slices/subjectsSlice";
 import Button from "../../components/ui/Button";
 import {
   Card,
