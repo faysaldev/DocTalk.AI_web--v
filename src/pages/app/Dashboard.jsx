@@ -12,6 +12,7 @@ import Input from '../../components/ui/Input';
 import Label from '../../components/ui/Label';
 import { cn } from '../../utils/cn';
 import { addSubject } from '../../redux/slice/subjectsSlice';
+import UploadModal from '../../components/UploadModal';
 
 const Dashboard = () => {
   const { currentUser } = useSelector(state => state.auth);
@@ -54,8 +55,9 @@ const Dashboard = () => {
           <p className="text-gray-500">Manage your subjects and documents</p>
         </div>
         <div className="flex space-x-2 relative">
-          {isDialogOpen ? (
-            <div className="bg-white p-4 rounded-lg shadow-lg border z-10 ">
+
+            <>
+            {/* <div className="bg-white p-4 rounded-lg shadow-lg border z-10 ">
               <form onSubmit={handleAddSubject}>
                 <h3 className="text-lg font-semibold mb-2">Add New Subject</h3>
                 <p className="text-sm text-gray-500 mb-4">
@@ -88,15 +90,19 @@ const Dashboard = () => {
                   </Button>
                 </div>
               </form>
-            </div>
-          ) : (
+            </div> */}
+
+
+            
+            </>
+
             <Button 
               className="bg-gradient-to-r from-purple-600 to-blue-500 text-white"
               onClick={() => setIsDialogOpen(true)}
             >
               <FaPlus className="w-4 h-4 mr-2" /> New Subject
             </Button>
-          )}
+          
           
           <Link to="/chat">
             <Button variant="outline">
@@ -105,6 +111,8 @@ const Dashboard = () => {
           </Link>
         </div>
       </div>
+
+         <UploadModal setIsDialogOpen={setIsDialogOpen} isOpen={isDialogOpen} />
 
       {/* Subjects Grid */}
       <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
@@ -231,6 +239,11 @@ const Dashboard = () => {
           </Card>
         </div>
       </div>
+
+
+      {isDialogOpen && <UploadModal /> }
+
+   
     </div>
   );
 };
