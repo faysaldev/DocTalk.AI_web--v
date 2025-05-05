@@ -176,7 +176,7 @@ const formatDateTime = (isoDateString) => {
       <div className="mt-12">
         <h2 className="text-xl font-semibold mb-4">Quick Actions</h2>
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
-          <Card>
+          {/* <Card>
             <CardContent className="pt-6">
               <div className="flex items-start space-x-4">
                 <div className="bg-purple-100 p-3 rounded-full">
@@ -193,7 +193,7 @@ const formatDateTime = (isoDateString) => {
                 </div>
               </div>
             </CardContent>
-          </Card>
+          </Card> */}
 
           <Card>
             <CardContent className="pt-6">
