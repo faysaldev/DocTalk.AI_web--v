@@ -48,9 +48,14 @@ const AppLayout = () => {
           isSidebarOpen ? 'translate-x-0' : '-translate-x-full'
         } lg:translate-x-0 transition-transform duration-300 ease-in-out`}
       >
-        <div className="h-16 flex items-center px-6 border-b">
-          <div className="flex items-center">
-            <FaBookOpen className="h-8 w-8 text-purple-600 mr-2" />
+        <div className="h-16 flex items-center px-6 border-b cursor-pointer">
+          <div className="flex items-center space-x-3 cursor-pointer">
+            {/* <FaBookOpen className="h-8 w-8 text-purple-600 mr-2" /> */}
+            <img
+            src="https://i.ibb.co.com/GvpFCs5d/doctalk-logo.png"
+            alt="DocTalk Logo"
+            className="h-8 object-contain"
+          />
             <span className="text-xl font-bold text-purple-600">DOCTALK</span>
           </div>
         </div>

@@ -11,8 +11,13 @@ const LandingPage = () => {
       {/* Header */}
       <header className="border-b">
         <div className="container mx-auto px-4 py-4 flex items-center justify-between">
-          <div className="flex items-center">
-            <FaBookOpen className="h-8 w-8 text-purple-600 mr-2" />
+          <div className="flex items-center space-x-3">
+            {/* <FaBookOpen className="h-8 w-8 text-purple-600 mr-2" /> */}
+                        <img
+            src="https://i.ibb.co.com/GvpFCs5d/doctalk-logo.png"
+            alt="DocTalk Logo"
+            className="h-8 object-contain"
+          />
             <h1 className="text-xl font-bold text-purple-600">DOCTALK</h1>
           </div>
           <div className="space-x-2">
@@ -113,8 +118,8 @@ const LandingPage = () => {
             Join DocTalk today and start getting smarter answers from your study materials.
           </p>
           <Link to="/signup">
-            <Button className="bg-white hover:bg-gray-100 px-8 py-3 rounded-md transition-all duration-300 text-black ">
-              Get Started for Free
+            <Button className="bg-white group hover:bg-gray-100 px-8 py-3 rounded-md transition-all duration-300 ">
+              <span className='text-black group-hover:text-white'>Get Started for Free</span>
             </Button>
           </Link>
         </div>
@@ -124,8 +129,13 @@ const LandingPage = () => {
       <footer className="border-t py-8">
         <div className="container mx-auto px-4">
           <div className="flex flex-col md:flex-row justify-between items-center">
-            <div className="flex items-center">
-              <FaBookOpen className="h-5 w-5 text-purple-600 mr-2" />
+            <div className="flex items-center space-x-3">
+              {/* <FaBookOpen className="h-5 w-5 text-purple-600 mr-2" /> */}
+                          <img
+            src="https://i.ibb.co.com/GvpFCs5d/doctalk-logo.png"
+            alt="DocTalk Logo"
+            className="h-8 object-contain"
+          />
               <span className="text-lg font-semibold text-purple-600">DocTalk</span>
             </div>
             <div className="mt-4 md:mt-0">
