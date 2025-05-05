@@ -51,12 +51,14 @@ const SignUp = () => {
     // dispatch(signupSuccess({email:data?.data?.details?.email,password:data?.data?.details?.cognito_sub,name:data?.data?.details?.username}))
     console.log(data,"clg loging datas")
       toast.success("Account created successfully");
-      buttonLoader(false)
+      dispatch(buttonLoader(false));
       navigate(`/verify-email/${username}`);
     } catch (error) {
       toast.error(error || "Failed to create account");
       dispatch(signupFailure(error))
     }
+      dispatch(buttonLoader(false));
+
   };
 
   return (

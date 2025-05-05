@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { FaBookOpen } from 'react-icons/fa';
 import { toast } from 'sonner';
 import Button from '../../components/ui/Button';
@@ -7,6 +7,7 @@ import Input from '../../components/ui/Input';
 import Label from '../../components/ui/Label';
 import usePublicAxiosSecure from '../../hooks/UseAxiosPublicSecure';
 import { useNavigate, useParams } from 'react-router-dom';
+import { buttonLoader } from '../../redux/slice/authSlice';
 
 const VerifyEmail = () => {
   const [code, setCode] = useState("");
@@ -15,6 +16,7 @@ const VerifyEmail = () => {
   const axiosPublicSecure = usePublicAxiosSecure();
   const {username} = useParams();
   const navigate = useNavigate();
+  const dispatch = useDispatch();
 
 
   const handleSubmit = async (e) => {
@@ -37,6 +39,8 @@ const VerifyEmail = () => {
         toast.success("Email Verified Successfully!");
         navigate("/login");
        setIsSubmitting(false);
+           dispatch(buttonLoader(false));
+       
 
       }
     } catch (error) {
@@ -57,6 +61,9 @@ const VerifyEmail = () => {
     } catch (error) {
       toast.error(error.response?.data?.message || "Failed to resend OTP");
     }
+
+        dispatch(buttonLoader(false));
+    
 
   };
 
