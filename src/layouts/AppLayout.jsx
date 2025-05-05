@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Outlet, NavLink, useNavigate } from 'react-router-dom';
+import { Outlet, NavLink, useNavigate, Link } from 'react-router-dom';
 import { FaBookOpen, FaSearch, FaTachometerAlt, FaBars, FaTimes, FaSignOutAlt, FaUser } from 'react-icons/fa';
 import { useDispatch, useSelector } from 'react-redux';
 import { logout } from '../redux/slice/authSlice';
@@ -32,7 +32,7 @@ const AppLayout = () => {
       <div className="lg:hidden fixed top-0 left-0 z-50 p-4">
         <button
           onClick={toggleSidebar}
-          className="p-2 rounded-md text-gray-500 hover:text-purple-600 hover:bg-gray-100 focus:outline-none"
+          className={`p-2 rounded-md text-gray-500 hover:text-purple-600 hover:bg-gray-100 focus:outline-none ${isSidebarOpen && "right-0"}`}
         >
           {isSidebarOpen ? (
             <FaTimes className="h-6 w-6" />
@@ -48,7 +48,7 @@ const AppLayout = () => {
           isSidebarOpen ? 'translate-x-0' : '-translate-x-full'
         } lg:translate-x-0 transition-transform duration-300 ease-in-out`}
       >
-        <div className="h-16 flex items-center px-6 border-b cursor-pointer">
+        <Link to={'/dashboard'} className="h-16 flex items-center px-6 border-b cursor-pointer">
           <div className="flex items-center space-x-3 cursor-pointer">
             {/* <FaBookOpen className="h-8 w-8 text-purple-600 mr-2" /> */}
             <img
@@ -58,7 +58,7 @@ const AppLayout = () => {
           />
             <span className="text-xl font-bold text-purple-600">DOCTALK</span>
           </div>
-        </div>
+        </Link>
 
         <div className="p-6">
           <div className="mb-8">
@@ -115,7 +115,7 @@ const AppLayout = () => {
       </div>
 
       {/* Main content */}
-      <div className="lg:pl-64">
+      <div className="lg:pl-64 px-10 -mt-1">
         <main className="p-6">
           <Outlet />
         </main>

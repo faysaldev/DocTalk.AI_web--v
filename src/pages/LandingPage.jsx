@@ -11,7 +11,7 @@ const LandingPage = () => {
       {/* Header */}
       <header className="border-b">
         <div className="container mx-auto px-4 py-4 flex items-center justify-between">
-          <div className="flex items-center space-x-3">
+          <Link to={'/'} className="flex items-center space-x-3">
             {/* <FaBookOpen className="h-8 w-8 text-purple-600 mr-2" /> */}
                         <img
             src="https://i.ibb.co.com/GvpFCs5d/doctalk-logo.png"
@@ -19,7 +19,7 @@ const LandingPage = () => {
             className="h-8 object-contain"
           />
             <h1 className="text-xl font-bold text-purple-600">DOCTALK</h1>
-          </div>
+          </Link>
           <div className="space-x-2">
             <Link to="/login">
               <Button variant="outline">Log In</Button>
@@ -129,7 +129,7 @@ const LandingPage = () => {
       <footer className="border-t py-8">
         <div className="container mx-auto px-4">
           <div className="flex flex-col md:flex-row justify-between items-center">
-            <div className="flex items-center space-x-3">
+            <Link to={'/'} className="flex items-center space-x-3">
               {/* <FaBookOpen className="h-5 w-5 text-purple-600 mr-2" /> */}
                           <img
             src="https://i.ibb.co.com/GvpFCs5d/doctalk-logo.png"
@@ -137,7 +137,7 @@ const LandingPage = () => {
             className="h-8 object-contain"
           />
               <span className="text-lg font-semibold text-purple-600">DocTalk</span>
-            </div>
+            </Link>
             <div className="mt-4 md:mt-0">
               <p className="text-gray-500 text-sm">
                 © {currentYear} DocTalk. All rights reserved.

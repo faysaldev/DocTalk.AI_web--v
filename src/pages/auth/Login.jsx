@@ -87,7 +87,7 @@ const Login = () => {
   return (
     <div className="space-y-6">
       <div className="text-center">
-        <div className="flex justify-center mb-2">
+        <Link to={'/'} className="flex justify-center mb-2">
           {/* <FaBookOpen className="h-10 w-10 text-purple-600" /> */}
                       <img
             src="https://i.ibb.co.com/GvpFCs5d/doctalk-logo.png"
@@ -96,7 +96,7 @@ const Login = () => {
           />
 
 
-        </div>
+        </Link>
         <h1 className="text-2xl font-bold">Welcome back</h1>
         <p className="text-gray-500">Log in to your DocTalk account</p>
       </div>

@@ -21,6 +21,18 @@ import { setSubjects } from "../../redux/slice/subjectsSlice";
 import UploadModal from "../../components/UploadModal";
 import useAxiosSecure from "../../hooks/useAxiosSecure";
 
+
+      const colors = [
+        "bg-blue-500",
+        "bg-purple-500",
+        "bg-green-500",
+        "bg-red-500",
+        "bg-yellow-500",
+        "bg-indigo-500",
+      ];
+
+
+
 const Dashboard = () => {
   const { currentUser } = useSelector((state) => state.auth);
   const { subjects, loading } = useSelector((state) => state.subjects);
@@ -137,7 +149,7 @@ const formatDateTime = (isoDateString) => {
         ) : (
           subjects.map((subject) => (
           <Link key={subject.id} to={`/subject/${subject.id}?name=${encodeURIComponent(subject.name)}`}>
-              <Card className="h-full cursor-pointer hover:shadow-md transition-all duration-300 hover:-translate-y-1">
+              <Card className={`h-full cursor-pointer hover:shadow-md transition-all duration-300 hover:-translate-y-1 `}>
                 <CardHeader
                   className={cn(
                     "flex flex-row items-center justify-between pb-2"
@@ -145,7 +157,7 @@ const formatDateTime = (isoDateString) => {
                 >
                   <div className="flex items-center space-x-2">
                     <div
-                      className={cn("w-4 h-4 rounded-full", subject.color)}
+                      className={`w-4 h-4 rounded-full ${colors[Math.floor(Math.random() * colors.length)]}`}
                     />
                     <CardTitle>{subject.name}</CardTitle>
                   </div>

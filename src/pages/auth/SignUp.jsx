@@ -62,7 +62,7 @@ const SignUp = () => {
   return (
     <div className="space-y-6">
       <div className="text-center">
-        <div className="flex justify-center mb-2">
+        <Link to={'/'} className="flex justify-center mb-2">
           {/* <FaBookOpen className="h-10 w-10 text-purple-600" /> */}
 
                       <img
@@ -71,7 +71,7 @@ const SignUp = () => {
             className="h-12 object-contain"
           />
 
-        </div>
+        </Link>
         <h1 className="text-2xl font-bold">Create an account</h1>
         <p className="text-gray-500">Sign up for DocTalk to get started</p>
       </div>
