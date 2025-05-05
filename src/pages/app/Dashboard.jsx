@@ -1,51 +1,88 @@
-import React, { useState, useEffect } from 'react';
-import { Link } from 'react-router-dom';
-import { useDispatch, useSelector } from 'react-redux';
-import { FaPlus, FaSearch, FaBookOpen, FaUpload } from 'react-icons/fa';
-import { toast } from 'sonner';
+import React, { useState, useEffect } from "react";
+import { Link } from "react-router-dom";
+import { useDispatch, useSelector } from "react-redux";
+import { FaPlus, FaSearch, FaBookOpen, FaUpload } from "react-icons/fa";
+import { toast } from "sonner";
 import { RiChatVoiceAiLine } from "react-icons/ri";
 
-import { fetchSubjects } from '../../redux/slices/subjectsSlice';
-import Button from '../../components/ui/Button';
-import { Card, CardContent, CardHeader, CardTitle, CardDescription } from '../../components/ui/Card';
-import Input from '../../components/ui/Input';
-import Label from '../../components/ui/Label';
-import { cn } from '../../utils/cn';
-import { addSubject } from '../../redux/slice/subjectsSlice';
-import UploadModal from '../../components/UploadModal';
+import { fetchSubjects } from "../../redux/slices/subjectsSlice";
+import Button from "../../components/ui/Button";
+import {
+  Card,
+  CardContent,
+  CardHeader,
+  CardTitle,
+  CardDescription,
+} from "../../components/ui/Card";
+import Input from "../../components/ui/Input";
+import Label from "../../components/ui/Label";
+import { cn } from "../../utils/cn";
+import { setSubjects } from "../../redux/slice/subjectsSlice";
+import UploadModal from "../../components/UploadModal";
+import useAxiosSecure from "../../hooks/useAxiosSecure";
 
 const Dashboard = () => {
-  const { currentUser } = useSelector(state => state.auth);
-  const { subjects, loading } = useSelector(state => state.subjects);
-  const [newSubjectName, setNewSubjectName] = useState("");
+  const { currentUser } = useSelector((state) => state.auth);
+  const { subjects, loading } = useSelector((state) => state.subjects);
+  // const [newSubjectName, setNewSubjectName] = useState("");
   const [isDialogOpen, setIsDialogOpen] = useState(false);
+  const [newFileUploaded, setNewFileUploaded] = useState(false)
   const dispatch = useDispatch();
+  const axiosSecure = useAxiosSecure();
+
+  console.log(subjects,"subject form api")
+
+
+
+
+
+
+
+
+
+
+  const fetchingSubject = async () => {
+    try {
+      const response = await axiosSecure.get(`/api/documents/categories`)
+      const api_sub = response?.data?.data?.categories;
+      dispatch(setSubjects(api_sub))
+    } catch (error) {
+      console.log(error.message)
+    }
+  }
+
 
   useEffect(() => {
-    dispatch(fetchSubjects());
-  }, [dispatch]);
+    fetchingSubject();
+  }, [newFileUploaded]);
 
-  const handleAddSubject = (e) => {
-    e.preventDefault();
-    
-    if (!newSubjectName.trim()) {
-      toast.error("Subject name cannot be empty");
-      return;
-    }
+  // Convert the created_at field to a readable date-time format
+const formatDateTime = (isoDateString) => {
+  const date = new Date(isoDateString);
+  return date.toLocaleString(); // Adjusts to the local time zone and format
+};
 
-    dispatch(addSubject(newSubjectName))
-    toast.success(`Subject "${newSubjectName}" created`);
-    setNewSubjectName("");
-    setIsDialogOpen(false);
-    
-    // dispatch(addSubjectAsync(newSubjectName))
-    //   .unwrap()
-    //   .then(() => {
-    //   })
-    //   .catch((error) => {
-    //     toast.error(error || "Failed to create subject");
-    //   });
-  };
+  // const handleAddSubject = (e) => {
+  //   e.preventDefault();
+
+  //   if (!newSubjectName.trim()) {
+  //     toast.error("Subject name cannot be empty");
+  //     return;
+  //   }
+
+  //   dispatch(addSubject(newSubjectName));
+  //   toast.success(`Subject "${newSubjectName}" created`);
+  //   setNewSubjectName("");
+  //   setIsDialogOpen(false);
+
+  //   // dispatch(addSubjectAsync(newSubjectName))
+  //   //   .unwrap()
+  //   //   .then(() => {
+  //   //   })
+  //   //   .catch((error) => {
+  //   //     toast.error(error || "Failed to create subject");
+  //   //   });
+  // };
 
   return (
     <div className="space-y-8">
@@ -55,55 +92,13 @@ const Dashboard = () => {
           <p className="text-gray-500">Manage your subjects and documents</p>
         </div>
         <div className="flex space-x-2 relative">
+          <Button
+            className="bg-gradient-to-r from-purple-600 to-blue-500 text-white"
+            onClick={() => setIsDialogOpen(true)}
+          >
+            <FaPlus className="w-4 h-4 mr-2" /> New Subject
+          </Button>
 
-            <>
-            {/* <div className="bg-white p-4 rounded-lg shadow-lg border z-10 ">
-              <form onSubmit={handleAddSubject}>
-                <h3 className="text-lg font-semibold mb-2">Add New Subject</h3>
-                <p className="text-sm text-gray-500 mb-4">
-                  Create a new subject to organize your documents.
-                </p>
-                <div className="mb-4">
-                  <Label htmlFor="subject-name">Subject Name</Label>
-                  <Input 
-                    id="subject-name" 
-                    value={newSubjectName}
-                    onChange={(e) => setNewSubjectName(e.target.value)}
-                    placeholder="e.g. Mathematics"
-                    className="mt-2"
-                    autoFocus
-                  />
-                </div>
-                <div className="flex justify-end space-x-2">
-                  <Button 
-                    type="button" 
-                    variant="outline" 
-                    onClick={() => setIsDialogOpen(false)}
-                  >
-                    Cancel
-                  </Button>
-                  <Button 
-                    type="submit" 
-                    className="bg-gradient-to-r from-purple-600 to-blue-500 text-white"
-                  >
-                    Create Subject
-                  </Button>
-                </div>
-              </form>
-            </div> */}
-
-
-            
-            </>
-
-            <Button 
-              className="bg-gradient-to-r from-purple-600 to-blue-500 text-white"
-              onClick={() => setIsDialogOpen(true)}
-            >
-              <FaPlus className="w-4 h-4 mr-2" /> New Subject
-            </Button>
-          
-          
           <Link to="/chat">
             <Button variant="outline">
               <RiChatVoiceAiLine className="w-4 h-4 mr-2" /> AI Chat
@@ -112,7 +107,6 @@ const Dashboard = () => {
         </div>
       </div>
 
-         <UploadModal setIsDialogOpen={setIsDialogOpen} isOpen={isDialogOpen} />
 
       {/* Subjects Grid */}
       <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
@@ -131,7 +125,7 @@ const Dashboard = () => {
                     Create your first subject to get started
                   </p>
                 </div>
-                <Button 
+                <Button
                   className="bg-gradient-to-r from-purple-600 to-blue-500 text-white mt-2"
                   onClick={() => setIsDialogOpen(true)}
                 >
@@ -144,24 +138,27 @@ const Dashboard = () => {
           subjects.map((subject) => (
             <Link key={subject.id} to={`/subject/${subject.id}`}>
               <Card className="h-full cursor-pointer hover:shadow-md transition-all duration-300 hover:-translate-y-1">
-                <CardHeader className={cn("flex flex-row items-center justify-between pb-2")}>
+                <CardHeader
+                  className={cn(
+                    "flex flex-row items-center justify-between pb-2"
+                  )}
+                >
                   <div className="flex items-center space-x-2">
-                    <div className={cn("w-4 h-4 rounded-full", subject.color)} />
+                    <div
+                      className={cn("w-4 h-4 rounded-full", subject.color)}
+                    />
                     <CardTitle>{subject.name}</CardTitle>
                   </div>
                 </CardHeader>
                 <CardContent>
                   <CardDescription className="text-sm pb-2">
-                    {subject.documentCount} document{subject.documentCount !== 1 ? "s" : ""}
+                    {subject.documentCount} document
+                    {subject.documentCount !== 1 ? "s" : ""}
                   </CardDescription>
                   <div className="flex items-center justify-between mt-4">
                     <span className="text-xs text-gray-500">
-                      Created on{" "}
-                      {new Date(subject.createdAt).toLocaleDateString("en-US", {
-                        month: "short",
-                        day: "numeric",
-                        year: "numeric",
-                      })}
+                      Created on: {" "}
+                      {formatDateTime(subject?.created_at)}
                     </span>
                     <Button variant="ghost" size="sm" className="gap-1">
                       <FaUpload className="h-3.5 w-3.5" />
@@ -197,7 +194,7 @@ const Dashboard = () => {
               </div>
             </CardContent>
           </Card>
-          
+
           <Card>
             <CardContent className="pt-6">
               <div className="flex items-start space-x-4">
@@ -218,7 +215,7 @@ const Dashboard = () => {
               </div>
             </CardContent>
           </Card>
-          
+
           <Card>
             <CardContent className="pt-6">
               <div className="flex items-start space-x-4">
@@ -230,7 +227,11 @@ const Dashboard = () => {
                   <p className="text-sm text-gray-500 mb-4">
                     Add a new subject category
                   </p>
-                  <Button variant="outline" size="sm" onClick={() => setIsDialogOpen(true)}>
+                  <Button
+                    variant="outline"
+                    size="sm"
+                    onClick={() => setIsDialogOpen(true)}
+                  >
                     Create
                   </Button>
                 </div>
@@ -240,10 +241,10 @@ const Dashboard = () => {
         </div>
       </div>
 
+      <UploadModal setIsDialogOpen={setIsDialogOpen} setNewFileUploaded={setNewFileUploaded} isOpen={isDialogOpen} />
 
-      {isDialogOpen && <UploadModal /> }
 
-   
+      {/* {isDialogOpen && <UploadModal /> } */}
     </div>
   );
 };

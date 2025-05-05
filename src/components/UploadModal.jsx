@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import { FaUpload, FaTimes, FaFileAlt } from "react-icons/fa";
 import useAxiosSecure from "../hooks/useAxiosSecure";
 
-const UploadModal = ({ isOpen, setIsDialogOpen }) => {
+const UploadModal = ({ isOpen, setIsDialogOpen,setNewFileUploaded }) => {
 
 
       const [subjectName, setSubjectName] = useState("");
@@ -111,6 +111,7 @@ const UploadModal = ({ isOpen, setIsDialogOpen }) => {
       setFile(null);
       setProgress(0);
       setSubjectName("");
+      setNewFileUploaded(val=> !val)
     } catch (error) {
       alert("There was a problem uploading your file.");
     } finally {
