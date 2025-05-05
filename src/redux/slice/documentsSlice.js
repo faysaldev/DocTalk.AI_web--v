@@ -1,7 +1,7 @@
 import { createSlice } from "@reduxjs/toolkit";
 
 const initialState = {
-  documents: {},
+  documents: [],
   loading: false,
   error: null,
   selectedDocument: null,
@@ -47,7 +47,7 @@ export const documentsSlice = createSlice({
       state.documentStats = action.payload;
     },
     clearDocuments: (state) => {
-      state.documents = {};
+      state.documents = [];
       state.selectedDocument = null;
     },
   },

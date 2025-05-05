@@ -136,7 +136,7 @@ const formatDateTime = (isoDateString) => {
           </Card>
         ) : (
           subjects.map((subject) => (
-            <Link key={subject.id} to={`/subject/${subject.id}`}>
+          <Link key={subject.id} to={`/subject/${subject.id}?name=${encodeURIComponent(subject.name)}`}>
               <Card className="h-full cursor-pointer hover:shadow-md transition-all duration-300 hover:-translate-y-1">
                 <CardHeader
                   className={cn(

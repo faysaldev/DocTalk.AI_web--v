@@ -1,8 +1,8 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { FaUpload, FaTimes, FaFileAlt } from "react-icons/fa";
 import useAxiosSecure from "../hooks/useAxiosSecure";
 
-const UploadModal = ({ isOpen, setIsDialogOpen,setNewFileUploaded }) => {
+const UploadModal = ({ isOpen, setIsDialogOpen,setNewFileUploaded,subject }) => {
 
 
       const [subjectName, setSubjectName] = useState("");
@@ -40,38 +40,6 @@ const UploadModal = ({ isOpen, setIsDialogOpen,setNewFileUploaded }) => {
     setFile(null);
     setProgress(0);
   };
-//   const [subjectName, setSubjectName] = useState("");
-//   const [file, setFile] = useState(null);
-//   const [loading, setLoading] = useState(false);
-//   const [progress, setProgress] = useState(0);
-//   const axiosSecure = useAxiosSecure();
-  
-
-//   const handleFileChange = (e) => {
-//     if (e.target.files && e.target.files[0]) {
-//       setFile(e.target.files[0]);
-//     }
-//   };
-
-//   const handleRemoveFile = () => {
-//     setFile(null);
-//     setProgress(0);
-//   };
-
-//   const simulateUpload = () => {
-//     return new Promise((resolve) => {
-//       let progressValue = 0;
-//       const interval = setInterval(() => {
-//         progressValue += 10;
-//         setProgress(progressValue);
-//         if (progressValue >= 100) {
-//           clearInterval(interval);
-//           resolve();
-//         }
-//       }, 200);
-//     });
-//   };
-
 
     const handleSubmit = async (e) => {
     e.preventDefault();
@@ -111,7 +79,7 @@ const UploadModal = ({ isOpen, setIsDialogOpen,setNewFileUploaded }) => {
       setFile(null);
       setProgress(0);
       setSubjectName("");
-      setNewFileUploaded(val=> !val)
+      if(setNewFileUploaded) setNewFileUploaded(val=> !val);
     } catch (error) {
       alert("There was a problem uploading your file.");
     } finally {
@@ -121,44 +89,16 @@ const UploadModal = ({ isOpen, setIsDialogOpen,setNewFileUploaded }) => {
     setIsDialogOpen(false)
   };
 
+  const fileSize = file ? (file.size / (1024 * 1024)).toFixed(2) + " MB" : "";
 
-//   const handleSubmit = async (e) => {
-//     e.preventDefault();
+  useEffect(()=> {
+    if(subject) setSubjectName(subject);
+  },[])
 
-//     if (subjectName.trim() === "") {
-//       alert("Please enter a subject name.");
-//       return;
-//     }
-
-//     if (!file) {
-//       alert("Please select a file to upload.");
-//       return;
-//     }
-
-//     setLoading(true);
-
-//     try {
-//       // Simulate the file upload with progress
-//       await simulateUpload();
-
-//       // Success message
-//       alert(`${file.name} has been uploaded to ${subjectName}.`);
-
-//       // Reset form
-//       setLoading(false);
-//       setProgress(0);
-//       setFile(null);
-//       setSubjectName("");
-//       setIsDialogOpen(false);
-//     } catch (error) {
-//       setLoading(false);
-//       alert("There was a problem uploading your file.");
-//     }
-//   };
 
   if (!isOpen) return null;
 
-  const fileSize = file ? (file.size / (1024 * 1024)).toFixed(2) + " MB" : "";
+
 
   return (
     <div className="fixed inset-0 bg-black/60 backdrop-blur-sm flex items-center justify-center z-50" style={{marginTop:'0px'}}>
@@ -182,6 +122,9 @@ const UploadModal = ({ isOpen, setIsDialogOpen,setNewFileUploaded }) => {
         <h2 className="text-xl font-semibold text-center mb-6">Upload Document</h2>
 
         <form onSubmit={handleSubmit} className="space-y-5">
+
+          {!subject && (
+
           <div>
             <label htmlFor="subject-name" className="block text-sm font-medium text-gray-700 mb-1">
               Subject <span className="text-red-600">*</span>
@@ -195,6 +138,8 @@ const UploadModal = ({ isOpen, setIsDialogOpen,setNewFileUploaded }) => {
               autoFocus
             />
           </div>
+
+          )}
 
           <div>
             <label className="block text-sm font-medium text-gray-700 mb-1">Document <span className="text-red-600">*</span></label>
