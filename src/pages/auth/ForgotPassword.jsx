@@ -57,13 +57,6 @@ const ForgotPassword = () => {
       data
     );
     console.log(response);
-
-    // if (response) {
-    //   toast.success("Verification code sent successfully!");
-    // }
-
-    // Dispatch Redux action for further state management
-    // await dispatch(forgotPassword(email)).unwrap();
     setSubmitted(true);
 
     toast.success("If an account exists with this email, you will receive a reset link");
@@ -82,9 +75,18 @@ const ForgotPassword = () => {
   return (
     <div className="space-y-6">
       <div className="text-center">
-        <div className="flex justify-center mb-2">
-          <FaBookOpen className="h-10 w-10 text-purple-600" />
-        </div>
+        {/* <div className="flex justify-center mb-2"> */}
+                  <Link to={'/'} className="flex justify-center mb-2">
+                    {/* <FaBookOpen className="h-10 w-10 text-purple-600" /> */}
+                                <img
+                      src="https://i.ibb.co.com/GvpFCs5d/doctalk-logo.png"
+                      alt="DocTalk Logo"
+                      className="h-12 object-contain"
+                    />
+          
+          
+                  </Link>
+        {/* </div> */}
         <h1 className="text-2xl font-bold">Reset your password</h1>
         <p className="text-gray-500">
           Enter your email and we'll send you a link to reset your password
